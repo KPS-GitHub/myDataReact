@@ -4,12 +4,14 @@ import Home from "./pages/Home";
 import NoMatch from "./pages/NoMatch";
 import Nav from "./components/Nav";
 
+import Facebook from './components/Facebook';
+
 const App = () => (
   <Router>
     <div>
-      <Nav />
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route exact path="/login" component={Facebook} />
         <Route component={NoMatch} />
       </Switch>
     </div>

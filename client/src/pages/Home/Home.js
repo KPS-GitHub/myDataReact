@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import DeleteBtn from "../../components/DeleteBtn";
 import Jumbotron from "../../components/Jumbotron";
+import Nav from "../../components/Nav";
 // import API from "../../utils/API";
 import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
@@ -14,10 +15,13 @@ class Home extends Component {
     render() {
         return(
             <Container fluid>
-                <Row>
-                    {<h1>this will be the user data summary/dashboard</h1>}
-                    {/* dashboard goes here */}
-                </Row>
+                <Nav />
+                <Container fluid>
+                    <Row>
+                        {<h1>this will be the user data summary/dashboard</h1>}
+                        {/* dashboard goes here */}
+                    </Row>
+                </Container>
             </Container>
         );
     };
