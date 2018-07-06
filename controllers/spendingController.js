@@ -3,17 +3,31 @@ const db = require("../models");
 // Defining methods for the spendingController
 module.exports = {
   findAll: function(req, res) {
+    console.log("HIT THE FINDALL")
     db.Spending
       .find(req.query)
       .sort({ date: -1 })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  create: function(req, res) {
+  findById: function(req, res) {
     db.Spending
-      .create(req.body)
+      .findById(req.params.id)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
+  },
+  create: function(req, res) {
+    console.log("HIT CREATE");
+    db.Spending
+      .create(req.body)
+      .then(dbModel => { 
+        console.log(dbModel)
+        res.json(dbModel)
+      })
+      .catch(err => { 
+        console.log(err)
+        res.status(422).json(err)
+      });
   },
   update: function(req, res) {
     db.Spending

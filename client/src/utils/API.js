@@ -3,7 +3,7 @@ import axios from "axios";
 export default {
   // USER SECTION
   // Gets all Users 
-  getUser: function() {
+  getUsers: function() {
     return axios.get("/api/user");
   },
   // Gets the user with the given id
@@ -21,7 +21,7 @@ export default {
 
   // SPENDING SECTION
   // Gets all Spending entries
-  getSpending: function() {
+  getSpendings: function() {
     return axios.get("/api/spending");
   },
   // Gets the spending entry with the given id

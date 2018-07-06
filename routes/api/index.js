@@ -4,6 +4,7 @@ const userRoutes = require("./user");
 
 // Spending routes
 router.use("/spending", spendingRoutes);
+// user routes
 router.use("/user", userRoutes);
 
 module.exports = router;
