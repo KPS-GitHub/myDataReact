@@ -22,8 +22,10 @@
     "axios": "^0.16.2",
     "body-parser": "^1.17.2",
     "cors": "^2.8.4",
+    "d3": "^5.5.0",
     "express": "^4.15.4",
     "mongoose": "^5.0.17",
+    "react-d3-basic": "^1.6.11",
     "react-facebook-login": "^4.0.1"
   }
 }
