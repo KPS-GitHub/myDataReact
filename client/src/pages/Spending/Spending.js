@@ -22,7 +22,10 @@ class SpendingPage extends Component {
     }
 
     loadSpending = () => {
-        API.getSpendings()
+        API.getSpendings({
+            where:
+                {userID: sessionStorage.userID}
+            })
             .then(res =>
             this.setState({ spending: res.data, amount: "", category: "" })
             )
@@ -47,7 +50,8 @@ class SpendingPage extends Component {
         if (this.state.amount && this.state.category) {
             API.saveSpending({
             amount: this.state.amount,
-            category: this.state.category
+            category: this.state.category,
+            userID: sessionStorage.userID
             })
             .then(res => this.loadSpending())
             .catch(err => console.log(err));
@@ -66,11 +70,9 @@ class SpendingPage extends Component {
                         <List>
                             {this.state.spending.map(purchase => (
                                 <ListItem key={purchase._id}>
-                                    <Link to={"/spending/" + purchase._id}>
                                     <strong>
                                         {purchase.amount} for {purchase.category}
                                     </strong>
-                                    </Link>
                                     <DeleteBtn onClick={() => this.deleteSpending(purchase._id)} />
                                 </ListItem>
                             ))}
