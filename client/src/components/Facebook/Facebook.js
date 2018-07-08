@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import FacebookLogin from 'react-facebook-login';
+import Home from '../../pages/Home';
 
 export default class Facebook extends Component {
     state = {
@@ -12,6 +13,9 @@ export default class Facebook extends Component {
 
     responseFacebook = response => {
         console.log(response);
+        // store userID in local storage - it will be pulled and attached to data every time a data entry is made
+        window.sessionStorage.setItem("userID", response.userID);
+        // set state for facebook login
         this.setState({
             isLoggedIn: true,
             userID: response.userID,
@@ -28,16 +32,7 @@ export default class Facebook extends Component {
 
         if(this.state.isLoggedIn) {
             fbContent = (
-                <div style={{
-                    width: '400px',
-                    margin: 'auto',
-                    background: '#f4f4f4',
-                    padding: '20px'
-                }}>
-                    <img src={this.state.picture} alt={this.state.name} />
-                    <h2>Welcome {this.state.name}</h2>
-                    Email: {this.state.email}
-                </div>
+                <Home />
             );
         } else {
             fbContent = (

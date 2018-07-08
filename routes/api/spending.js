@@ -2,7 +2,8 @@ const router = require("express").Router();
 const spendingController = require("../../controllers/spendingController");
 
 // Matches with "/api/spending"
-router.route("/")
+router
+  .route("/")
   .get(spendingController.findAll)
   .post(spendingController.create);
 

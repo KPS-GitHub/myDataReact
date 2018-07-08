@@ -11,8 +11,9 @@ const App = () => (
   <Router>
     <div>
       <Switch>
-        <Route exact path="/" component={Home} />
+        <Route exact path="/" component={Facebook} />
         <Route exact path="/login" component={Facebook} />
+        <Route exact path="/home" component={Home} />
         <Route exact path="/spending" component={SpendingPage} />
         <Route component={NoMatch} />
       </Switch>
