@@ -7,18 +7,21 @@ import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
 import { List, ListItem } from "../../components/List";
 import { Input, TextArea, FormBtn } from "../../components/Form";
-
+import { LineChart, PieChart, Legend } from "react-easy-chart";
+import moment from "moment";
 
 class SpendingPage extends Component {
     state = {
         spending: [],
         amount: "",
         category: "",
-        date: ""
+        date: "",
+        dataArr: []
     };
 
     componentDidMount() {
         this.loadSpending();
+        this.loadLineChartData();
     }
 
     loadSpending = () => {
@@ -27,7 +30,7 @@ class SpendingPage extends Component {
                 {userID: sessionStorage.userID}
             })
             .then(res =>
-            this.setState({ spending: res.data, amount: "", category: "" })
+                this.setState({ spending: res.data, amount: "", category: "" })
             )
             .catch(err => console.log(err));
     };
@@ -58,6 +61,61 @@ class SpendingPage extends Component {
         }
     };
 
+    // this function converts the date from mongodb into 
+
+    loadLineChartData = () => {
+        let dataObjPH = {};
+        let categoryArr = [];
+        let lineChartDataArr = [];
+        API.getSpendings({
+            where:
+                {userID: sessionStorage.userID}
+        })
+        .then(res => {
+            // create array of categories
+            for (let i=0; i<res.data.length; i++) {
+                if (categoryArr.indexOf(res.data[i].category) === -1) {
+                    categoryArr.push(res.data[i].category);
+                }
+            }
+            // now we have categoryArr=["coffee","lunch",...]
+            console.log("categoryArr:",categoryArr);
+
+            // make starter array for lineChartDataArr
+            for (let i=0; i<categoryArr.length; i++) {
+                lineChartDataArr.push([]);
+            }
+            console.log("empty lineChartDataArr:",lineChartDataArr);
+
+            // fill out lineChartDataArr with date and time entries
+            for (let i=0; i<res.data.length; i++) {
+                for (let j=0; j<categoryArr.length; j++) {
+                    if (res.data[i].category === categoryArr[j]) {
+                        lineChartDataArr[j].push([moment(res.data[i].date).format("D-MMM-YY"), res.data[i].amount]);
+                        // lineChartDataArr[j].push([parseFloat(res.data[i].date.split("T")[0].split("-",2).join(".")), res.data[i].amount]);
+                    }
+                }
+            }
+            console.log("finished lineChartDataArr:",lineChartDataArr);
+
+            // load data object in format that can be plugged into the LineChart component as the data prop
+            let dataEntry = {};
+            let dataArr = [];
+            for (let i=0; i<lineChartDataArr.length; i++) {
+                let categoryData = [];
+                for (let j=0; j<lineChartDataArr[i].length; j++) {
+                    dataEntry = {x: lineChartDataArr[i][j][0], y: lineChartDataArr[i][j][1]};
+                    categoryData.push(dataEntry);
+                }
+                dataArr.push(categoryData);
+            }
+            this.setState({dataArr: dataArr});
+            console.log("dataArr:", this.state.dataArr);
+        });
+    };
+
+    
+
 
     render() {
         return (
@@ -83,7 +141,17 @@ class SpendingPage extends Component {
                     </Col>
                     {/* graphs/data vis */}
                     <Col size="lg-8">
-                    
+                        <Col size="lg-12">
+                        <LineChart
+                            xType={'time'}
+                            axes
+                            margin={{top: 50, right: 50, bottom: 50, left: 50}}
+                            axisLabels={{x: 'Date', y: 'Amount ($)'}}
+                            width={600}
+                            height={600}
+                            data={this.state.dataArr}
+                        />
+                        </Col>
                     </Col>
                 </Row>
                 <Row>
