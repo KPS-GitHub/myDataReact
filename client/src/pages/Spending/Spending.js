@@ -18,11 +18,11 @@ class SpendingPage extends Component {
         date: "",
         dataArr: [],
         // graph-related state vars
-        showToolTip: false,
-        top: "",
-        left: "",
-        y: 0,
-        x: 0
+        // showToolTip: false,
+        // top: "",
+        // left: "",
+        // y: 0,
+        // x: 0
     };
 
     componentDidMount() {
@@ -36,7 +36,7 @@ class SpendingPage extends Component {
                 {userID: sessionStorage.userID}
             })
             .then(res =>
-                this.setState({ spending: res.data, amount: "", category: "" })
+                this.setState({ spending: res.data })
             )
             .catch(err => console.log(err));
     };
@@ -84,6 +84,7 @@ class SpendingPage extends Component {
                 {userID: sessionStorage.userID}
         })
         .then(res => {
+            console.log("res from loadLineChartData", res);
             // create array of categories
             for (let i=0; i<res.data.length; i++) {
                 if (categoryArr.indexOf(res.data[i].category) === -1) {
@@ -112,6 +113,7 @@ class SpendingPage extends Component {
                     }
                 }
             }
+            console.log("lineChartDataArr before reformat:",lineChartDataArr);
             // lineChartDataArr looks like: [[category 1 data points],[cat 2 dp's],[cat 3 dp's],...]
             // -each data point looks like: [date, amount]
 
@@ -125,6 +127,7 @@ class SpendingPage extends Component {
                     dataEntry = {x: lineChartDataArr[i][j][0], y: lineChartDataArr[i][j][1]};
                     categoryData.push(dataEntry);
                 }
+                console.log("categoryData:",categoryData); //data not in chronological order - why?!?!
                 dataArr.push(categoryData);
             }
             this.setState({dataArr: dataArr});

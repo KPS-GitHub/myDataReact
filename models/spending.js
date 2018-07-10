@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const spendingSchema = new Schema({
     amount: { type: Number, required: true },
     category: { type: String, required: true },
-    date: { type: Date, default: Date.now },
+    date: { type: Number, default: Date.now() },
     userID: { type: Number, required: true}
 });
 
