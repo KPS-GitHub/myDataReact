@@ -43,7 +43,10 @@ class SpendingPage extends Component {
 
     deleteSpending = id => {
         API.deleteSpending(id)
-            .then(res => this.loadSpending())
+            .then(res => {
+                this.loadSpending()
+                this.loadLineChartData()
+            })
             .catch(err => console.log(err));
     };
 
@@ -62,7 +65,10 @@ class SpendingPage extends Component {
             category: this.state.category,
             userID: sessionStorage.userID
             })
-            .then(res => this.loadSpending())
+            .then(res => {
+                this.loadSpending()
+                this.loadLineChartData()
+            })
             .catch(err => console.log(err));
         }
     };
@@ -176,7 +182,7 @@ class SpendingPage extends Component {
                             {this.state.spending.map(purchase => (
                                 <ListItem key={purchase._id}>
                                     <strong>
-                                        {purchase.amount} for {purchase.category}
+                                        {moment(purchase.date).format("MMMM Do, YYYY")} - ${purchase.amount} for {purchase.category}
                                     </strong>
                                     <DeleteBtn onClick={() => this.deleteSpending(purchase._id)} />
                                 </ListItem>
@@ -220,8 +226,8 @@ class SpendingPage extends Component {
                                 // mouseOutHandler={this.mouseOutHandler}
                                 // mouseMoveHandler={this.mouseMoveHandler}
                                 width={600}
-                                interpolate={'linear'}
                                 height={400}
+                                interpolate={'linear'}
                                 data={this.state.dataArr}
                                 style={{ '.label': { fill: 'black' } }}
                             />

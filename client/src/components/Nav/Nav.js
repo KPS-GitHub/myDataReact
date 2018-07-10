@@ -15,9 +15,10 @@ const Nav = () => (
           </a>
           <div className="dropdown-menu" aria-labelledby="navbarDropdown">
 
-          <a className="dropdown-item" href="/calorie">Calorie Counter</a>
-          
-          <a className="dropdown-item" href="/spending">Spending Tracker</a>
+            <a className="dropdown-item" href="/calorie">Calorie Counter</a>
+            
+            <a className="dropdown-item" href="/spending">Spending Tracker</a>
+            
           </div>
       </li>
       </ul>
