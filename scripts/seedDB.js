@@ -1,5 +1,6 @@
 // const mongoose = require("mongoose");
 // const db = require("../models");
+// const moment = require("moment");
 // mongoose.Promise = global.Promise;
 
 // // This file empties the Books collection and inserts the books below
@@ -13,9 +14,58 @@
 
 // const testSeed = [
 //   {
-//     amount: 100,
-//     category: "Books",
-//     date: new Date(Date.now())
+//     amount: 5,
+//     category: "coffee",
+//     date: "6-Jun-18",
+//     userID: sessionStorage.userID
+//   },
+//   {
+//     amount: 3,
+//     category: "coffee",
+//     date: "13-Jun-18",
+//     userID: sessionStorage.userID
+//   },
+//   {
+//     amount: 5,
+//     category: "coffee",
+//     date: "14-Jun-18",
+//     userID: sessionStorage.userID
+//   },
+//   {
+//     amount: 5,
+//     category: "coffee",
+//     date: "16-Jun-18",
+//     userID: sessionStorage.userID
+//   },
+//   {
+//     amount: 3,
+//     category: "coffee",
+//     date: "17-Jun-18",
+//     userID: sessionStorage.userID
+//   },
+//   {
+//     amount: 5,
+//     category: "coffee",
+//     date: "22-Jun-18",
+//     userID: sessionStorage.userID
+//   },
+//   {
+//     amount: 3,
+//     category: "coffee",
+//     date: "30-Jun-18",
+//     userID: sessionStorage.userID
+//   },
+//   {
+//     amount: 5,
+//     category: "coffee",
+//     date: "3-Jul-18",
+//     userID: sessionStorage.userID
+//   },
+//   {
+//     amount: 5,
+//     category: "coffee",
+//     date: "4-Jul-18",
+//     userID: sessionStorage.userID
 //   }
 // ];
 

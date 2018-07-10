@@ -78,27 +78,33 @@ class SpendingPage extends Component {
                     categoryArr.push(res.data[i].category);
                 }
             }
-            // now we have categoryArr=["coffee","lunch",...]
-            console.log("categoryArr:",categoryArr);
+            // now we have categoryArr=["coffee","lunch",...] (maybe not exactly in this order, but this is what it looks like)
 
-            // make starter array for lineChartDataArr
+            // make starter array of arrays for lineChartDataArr
             for (let i=0; i<categoryArr.length; i++) {
                 lineChartDataArr.push([]);
             }
-            console.log("empty lineChartDataArr:",lineChartDataArr);
 
-            // fill out lineChartDataArr with date and time entries
+            // fill out lineChartDataArr with date and amount entries
+            // loop through every retrieved data point
             for (let i=0; i<res.data.length; i++) {
+                // loop through the category array as a reference for grouping data points, by category, into arrays, all of which are stored in lineChartDataArr
                 for (let j=0; j<categoryArr.length; j++) {
                     if (res.data[i].category === categoryArr[j]) {
-                        lineChartDataArr[j].push([moment(res.data[i].date).format("D-MMM-YY"), res.data[i].amount]);
-                        // lineChartDataArr[j].push([parseFloat(res.data[i].date.split("T")[0].split("-",2).join(".")), res.data[i].amount]);
+                        lineChartDataArr[j].push(
+                            [
+                                moment(res.data[i].date).format("D-MMM-YY") ,
+                                res.data[i].amount
+                            ]
+                        );
                     }
                 }
             }
-            console.log("finished lineChartDataArr:",lineChartDataArr);
+            // lineChartDataArr looks like: [[category 1 data points],[cat 2 dp's],[cat 3 dp's],...]
+            // -each data point looks like: [date, amount]
 
-            // load data object in format that can be plugged into the LineChart component as the data prop
+            // load each data point into an object to match required react-easy-chart format
+            // -this changes data points from [date, amount] to {x: date, y: amount}
             let dataEntry = {};
             let dataArr = [];
             for (let i=0; i<lineChartDataArr.length; i++) {
@@ -110,9 +116,11 @@ class SpendingPage extends Component {
                 dataArr.push(categoryData);
             }
             this.setState({dataArr: dataArr});
-            console.log("dataArr:", this.state.dataArr);
+            console.log(this.state.dataArr);
         });
     };
+
+    
 
     
 
@@ -148,8 +156,10 @@ class SpendingPage extends Component {
                             margin={{top: 50, right: 50, bottom: 50, left: 50}}
                             axisLabels={{x: 'Date', y: 'Amount ($)'}}
                             width={600}
-                            height={600}
+                            interpolate={'linear'}
+                            height={400}
                             data={this.state.dataArr}
+                            style={{ '.label': { fill: 'black' } }}
                         />
                         </Col>
                     </Col>
