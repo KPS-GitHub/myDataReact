@@ -15,8 +15,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^3.5.0",
-    "nodemon": "^1.11.0"
   },
   "dependencies": {
     "axios": "^0.16.2",
@@ -27,6 +25,8 @@
     "mongoose": "^5.0.17",
     "react-d3-basic": "^1.6.11",
     "react-easy-chart": "^1.0.0",
-    "react-facebook-login": "^4.0.1"
+    "react-facebook-login": "^4.0.1",
+    "concurrently": "^3.6.0",
+    "nodemon": "^1.11.0"
   }
 }
