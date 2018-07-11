@@ -82,6 +82,8 @@ class SpendingPage extends Component {
         let dataObjPH = {};
         let categoryArr = [];
         let lineChartDataArr = [];
+        this.state.categorySpendingTotals = [];
+        this.state.spendingTotal = 0;
         API.getSpendings({
             where:
                 {userID: sessionStorage.userID}
@@ -261,12 +263,12 @@ class SpendingPage extends Component {
                             <h5>Category Totals</h5>
                                 {this.state.categorySpendingTotals.length ? (
                                     <Row>
-                                        <Col size="lg-4">
+                                        <Col size="lg-3">
                                             {this.state.categoryArr.map(cat => (
                                                 <p>{cat}:</p>
                                             ))}
                                         </Col>
-                                        <Col size="lg-4">
+                                        <Col size="lg-3">
                                             {this.state.categorySpendingTotals.map(catTotal => (
                                                 <p>${catTotal}</p>
                                             ))}
