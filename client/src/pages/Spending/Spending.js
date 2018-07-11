@@ -17,6 +17,9 @@ class SpendingPage extends Component {
         category: "",
         date: "",
         dataArr: [],
+        categoryArr: [],
+        spendingTotal: 0,
+        categorySpendingTotals: [],
         // graph-related state vars
         // showToolTip: false,
         // top: "",
@@ -84,13 +87,16 @@ class SpendingPage extends Component {
                 {userID: sessionStorage.userID}
         })
         .then(res => {
-            console.log("res from loadLineChartData", res);
             // create array of categories
             for (let i=0; i<res.data.length; i++) {
                 if (categoryArr.indexOf(res.data[i].category) === -1) {
                     categoryArr.push(res.data[i].category);
+                    // add a 0 entry to categorySpendingTotals in order to have the same number of entries as categories
+                    this.state.categorySpendingTotals.push(0);
                 }
             }
+            this.setState({categoryArr: categoryArr});
+            console.log("categoryArr:", categoryArr);
             // now we have categoryArr=["coffee","lunch",...] (maybe not exactly in this order, but this is what it looks like)
 
             // make starter array of arrays for lineChartDataArr
@@ -110,12 +116,21 @@ class SpendingPage extends Component {
                                 res.data[i].amount
                             ]
                         );
+
                     }
                 }
             }
             console.log("lineChartDataArr before reformat:",lineChartDataArr);
             // lineChartDataArr looks like: [[category 1 data points],[cat 2 dp's],[cat 3 dp's],...]
             // -each data point looks like: [date, amount]
+
+            // calculate spending totals by category and overall, update state vars appropriately
+            for (let i=0; i<lineChartDataArr.length; i++) {
+                for (let j=0; j<lineChartDataArr[i].length; j++) {
+                    this.state.categorySpendingTotals[i] += lineChartDataArr[i][j][1];
+                    this.state.spendingTotal += lineChartDataArr[i][j][1];
+                }
+            }
 
             // load each data point into an object to match required react-easy-chart format
             // -this changes data points from [date, amount] to {x: date, y: amount}
@@ -180,6 +195,7 @@ class SpendingPage extends Component {
                 <Row>
                     {/* spending table */}
                     <Col size="lg-4">
+                    <h3>mySpending</h3>
                     {this.state.spending.length ? (
                         <List>
                             {this.state.spending.map(purchase => (
@@ -238,6 +254,32 @@ class SpendingPage extends Component {
                         
                         <Col size="lg-12">
                             {/* Summary Stats */}
+                            <h2>Summary Stats</h2>
+                            <br/>
+                            <p>Total Spent: ${this.state.spendingTotal}</p>
+                            <br/>
+                            <h5>Category Totals</h5>
+                                {this.state.categorySpendingTotals.length ? (
+                                    <Row>
+                                        <Col size="lg-4">
+                                            {this.state.categoryArr.map(cat => (
+                                                <p>{cat}:</p>
+                                            ))}
+                                        </Col>
+                                        <Col size="lg-4">
+                                            {this.state.categorySpendingTotals.map(catTotal => (
+                                                <p>${catTotal}</p>
+                                            ))}
+                                        </Col>
+                                    </Row>
+                                    ) : (
+                                        <h3>No Results to Display</h3>
+                                )}
+                            {/* <p>{this.state.categoryArr[0]}: ${this.state.categorySpendingTotals[0]}</p>
+                            <p>{this.state.categoryArr[1]}: ${this.state.categorySpendingTotals[1]}</p>
+                            <p>{this.state.categoryArr[2]}: ${this.state.categorySpendingTotals[2]}</p>
+                            <p>{this.state.categoryArr[3]}: ${this.state.categorySpendingTotals[3]}</p>
+                            <p>{this.state.categoryArr[4]}: ${this.state.categorySpendingTotals[4]}</p> */}
                         </Col>
                     </Col>
                 </Row>
