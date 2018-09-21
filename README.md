@@ -1,6 +1,6 @@
 # myDataReact
 
-NOTE: Currently, this project is a bare-bones spending tracker page and only works locally (running mongod then npm start in another window on your git CLI). I plan on recreating this project with cleaner code and a successful heroku deploy so that it is both easier to expand on as well as able to be used over the live internet.
+NOTE: Currently, this project is a bare-bones spending tracker page and only works locally (running mongod then npm start in another window on your git CLI). I plan on recreating this project with cleaner code and a successful heroku deploy so that it is both easier to expand on as well as able to be accessed through a browser.
 
 DESCRIPTION: myData is a simple web app made with the MERN stack where users log in with a facebook account, then track various quantatative aspects of their lives that people generally are interested in keeping track of (ex: tracking money spent on various vices like coffee/eating out, tracking caloric intake, general notes, etc.)
 
